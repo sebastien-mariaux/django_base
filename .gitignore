@@ -1,0 +1,6 @@
+/.coverage
+/.idea/*
+**/__pycache__/**/*
+venv/*
+htmlcov/*
+/geckodriver

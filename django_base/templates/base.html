@@ -1,0 +1,30 @@
+{% load static i18n %}
+
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE|default:'en_us' }}">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Fomantic -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.js"></script>
+    <link href="{% static 'css/header.css' %}" rel="stylesheet">
+    <link href="{% static 'css/nav.css' %}" rel="stylesheet">
+
+    <title>
+    {{ SITE_TITLE }}
+    {% if PAGE_TITLE %}
+        | {{ PAGE_TITLE }}
+    {% endif %}
+    </title>
+  </head>
+
+  <body>
+    {% block layout %}
+    {% endblock layout %}
+  </body>
+</html>

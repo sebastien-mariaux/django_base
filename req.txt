@@ -1,0 +1,11 @@
+Django==3.1.6
+
+# Database
+psycopg2
+
+# Testing
+pytest
+pytest-django
+pytest-cov
+pytest-random-order
+selenium

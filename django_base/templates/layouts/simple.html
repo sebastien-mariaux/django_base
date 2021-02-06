@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block layout %}
+<div class="ui nav container">
+  {% block nav %}
+    {% include "nav.html" %}
+  {% endblock nav %}
+</div>
+
+<header>
+  {% block header %}
+    {% include "header.html" %}
+  {% endblock header %}
+</header>
+
+<div class="ui main container">
+  {% block content %}
+  {% endblock content %}
+</div>
+{% endblock layout %}

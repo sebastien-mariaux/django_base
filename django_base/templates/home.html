@@ -1,0 +1,36 @@
+{% extends "layouts/simple.html" %}
+
+{% block content %}
+    <h1>Presentation</h1>
+
+A standard base for a django project.
+
+
+<h2>Included features</h2>
+<h3>Fonctionalities</h3>
+<ul>
+    <li>Custom user model with email or username authentication</li>
+    <li>Base layout using Fomantic UI</li>
+</ul>
+
+<h3>Testing and quality of code</h3>
+- Pytest
+
+
+<h2>Setup</h2>
+<p>Postgres database run in a docker container:</p>
+
+<p><em>docker-compose up</em></p>
+
+<p>Lauch the virtual environement and install modules:</p>
+
+<div>
+    <p><em>workon django_base</em></p>
+    <p><em>pip install -r req.txt</em></p>
+</div>
+
+
+
+
+
+{% endblock content %}
