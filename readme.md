@@ -24,11 +24,14 @@ workon django_base
 pip install -r req.txt
 ```
 
-### Automation test
-sudo apt-get install chromium-browser
+### Fixtures
+Admin user :
+- username : capitain.raymond.holt@b99.com  
+- password : iamthebossofthe99
 
-cd /usr/bin
-sudo CHROME_VERSION=$(curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
-sudo wget https://chromedriver.storage.googleapis.com/$CHROME_VERSION/chromedriver_linux64.zip
-sudo unzip chromedriver_linux64.zip 
-sudo chmod +x /usr/bin/chromedriver
+Normal user :
+- username : jake.peralta@b99.com
+- password : rosa1234
+
+Alternatively, create a custom superuser :  
+`./manage.py createsuperuser`

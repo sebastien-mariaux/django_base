@@ -1,5 +1,6 @@
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from django.urls import reverse_lazy
 from django.shortcuts import reverse
@@ -24,7 +25,7 @@ class LogoutView(auth_views.LogoutView):
     pass
 
 
-class ProfileView(generic.DetailView):
+class ProfileView(LoginRequiredMixin, generic.DetailView):
     template_name = 'users/profile.html'
     context_object_name = 'user'
 
@@ -32,7 +33,7 @@ class ProfileView(generic.DetailView):
         return self.request.user
 
 
-class UpdateProfileView(generic.UpdateView):
+class UpdateProfileView(LoginRequiredMixin, generic.UpdateView):
     model = UserModel
     fields = ['username', 'first_name', 'last_name']
     context_object_name = 'user'

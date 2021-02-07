@@ -1,0 +1,62 @@
+[
+  {
+    "model": "users.emailuser",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$xgUnzK1JVLiQ$6P3i/Qrg4F5KkjWrdkag263GS4baV7jbSakgOsT3u3Y=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "baracuda",
+      "first_name": "Jake",
+      "last_name": "Peralta",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-02-07T21:07:12.057Z",
+      "email": "jake.peralta@b99.com",
+      "created_at": "2021-02-07T21:07:12.192Z",
+      "updated_at": "2021-02-07T21:07:12.192Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.emailuser",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$dtHvrLKCZ32b$DStVW6BQ8AW7D1TX9q/r+yzhIOX/ma7867t9C6Gk6m4=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "Aby",
+      "first_name": "Amy",
+      "last_name": "Santiago",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-02-07T21:07:20.037Z",
+      "email": "amy.santiago@b99.com",
+      "created_at": "2021-02-07T21:07:20.178Z",
+      "updated_at": "2021-02-07T21:07:20.178Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.emailuser",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$PpgZmYtRCR1F$5jLzzqCHebivJcYzH1ZUjBVxZH+w6dMX+QoB1XOEktE=",
+      "last_login": null,
+      "is_superuser": true,
+      "username": "Capitain",
+      "first_name": "Raymond",
+      "last_name": "Holt",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-02-07T21:08:59.950Z",
+      "email": "capitain.raymond.holt@b99.com",
+      "created_at": "2021-02-07T21:09:00.078Z",
+      "updated_at": "2021-02-07T21:09:00.078Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  }
+]

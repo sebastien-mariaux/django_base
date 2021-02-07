@@ -1,25 +1,7 @@
 
 from django.test import TestCase
-from django.contrib.auth import get_user_model
 from django.shortcuts import reverse
-
-UserModel = get_user_model()
-
-
-def create_user_jake():
-    user = UserModel.objects.create_user(
-        email="jake.peralta@b99.com", username='baracuda',
-        first_name="Jake", last_name="Peralta", password='rosa1234'
-    )
-    return user
-
-
-def create_user_amy():
-    user = UserModel.objects.create_user(
-        email="amy.santiago@b99.com", username='Aby',
-        first_name="Amy", last_name="Santiago", password='philatelie'
-    )
-    return user
+from .test_data import create_user_amy, create_user_jake
 
 
 class LoginTest(TestCase):
@@ -174,3 +156,13 @@ class AccountTest(TestCase):
         self.assertEqual('users/edit.html', response.template_name[0])
         self.user.refresh_from_db()
         self.assertEqual('jake.peralta@b99.com', self.user.email)
+
+
+class AuthenticatedOnlyPages(TestCase):
+    def test_account_page(self):
+        self.assert_redirected_to_login('profile')
+
+    def assert_redirected_to_login(self, url_name):
+        url = reverse(url_name)
+        response = self.client.get(url, follow=True)
+        self.assertEqual('users/login.html', response.template_name[0])
