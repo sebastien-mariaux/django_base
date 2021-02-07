@@ -5,3 +5,4 @@ venv/*
 htmlcov/*
 /geckodriver
 /geckodriver.log
+/coverage/*
