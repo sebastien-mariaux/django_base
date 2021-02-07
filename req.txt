@@ -5,3 +5,9 @@ psycopg2
 
 # Testing
 selenium
+
+# Code style
+pycodestyle==2.5.0
+pylint==2.5.3
+pylint-django==2.2.0
+mypy==0.761

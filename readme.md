@@ -10,7 +10,12 @@ A standard base for a django project.
 
 ### Testing and quality of code
 - Pytest
+- Pycodestyle
+- Mypy
+- Pylint
+- Coverage
 
+Run with `./pipeline.sh`
 
 ## Setup
 Postgres database run in a docker container:

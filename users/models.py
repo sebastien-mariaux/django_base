@@ -36,4 +36,3 @@ class EmailUser(AbstractUser):
         verbose_name=_("updated at"),
         auto_now=True
     )
-
