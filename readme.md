@@ -25,6 +25,9 @@ pip install -r req.txt
 ```
 
 ### Fixtures
+Install :   
+`./manage.py loaddata django_base/fixtures/users.json`
+
 Admin user :
 - username : capitain.raymond.holt@b99.com  
 - password : iamthebossofthe99
