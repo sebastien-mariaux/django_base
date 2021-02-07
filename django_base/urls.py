@@ -20,5 +20,5 @@ from .views import HomeView
 urlpatterns = [
     re_path(r'^admin/', admin.site.urls),
     path('', HomeView.as_view(), name='home'),
-    path('accounts/', include('users.urls')),
+    path('account/', include('users.urls')),
 ]

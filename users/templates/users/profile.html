@@ -1,0 +1,34 @@
+{% extends "layouts/simple.html" %}
+{% load i18n %}
+
+{% block content %}
+<h1>
+  {% trans 'My profile' %}
+  <a class="ui primary right floated button" href="{% url 'edit_profile' %}">
+      <i class="icon pencil alternate"></i>
+      {% trans 'Edit' %}
+  </a>
+</h1>
+
+<table class="ui definition table">
+  <tbody>
+    <tr>
+      <td>{% trans 'username' %}</td>
+      <td>{{ user.username }}</td>
+    </tr>
+    <tr>
+      <td>{% trans 'first name' %}</td>
+      <td>{{ user.first_name }}</td>
+    </tr>
+    <tr>
+      <td>{% trans 'last name' %}</td>
+      <td>{{ user.last_name }}</td>
+    </tr>
+    <tr>
+      <td>{% trans 'email' %}</td>
+      <td>{{ user.email }}</td>
+    </tr>
+  </tbody>
+</table>
+
+{% endblock content %}

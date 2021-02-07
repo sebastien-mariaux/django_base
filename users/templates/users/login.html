@@ -1,11 +1,12 @@
 {% extends "layouts/simple.html" %}
+{% load i18n %}
 
 {% block content %}
-<h1>Login</h1>
+<h1>{% trans 'Login' %}</h1>
 
 <form action="{% url 'login' %}" method="post">
   {% csrf_token %}
   {{ form.as_p }}
-  <button type="submit" id="submit">Login</button>
+  <button type="submit" id="submit">{% trans 'Login' %}</button>
 </form>
 {% endblock content %}
