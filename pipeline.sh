@@ -1,6 +1,7 @@
 echo 'RUN TESTS...'
 coverage run --source='.' manage.py test users
 
+
 echo 'GENERATE COVERAGE...'
 coverage report
 coverage html

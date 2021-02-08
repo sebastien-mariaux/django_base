@@ -1,0 +1,11 @@
+code {
+    background-color: #5b5b5b;
+    color: #fff;
+    border-radius: 5px;
+    padding: 0.2em 0.5em;
+}
+
+.main.container {
+    margin-bottom: 50px;
+    margin-top: 20px;
+}

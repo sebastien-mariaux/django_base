@@ -5,8 +5,11 @@ A standard base for a django project.
 
 
 ## Included features
-### Fonctionnalities
+### Functionalities
 - Custom user model with email authentication
+- Basic Account interface with profile edition
+- Base layout using Fomantic UI
+- Basic markdown integration
 
 ### Testing and quality of code
 - Pytest
@@ -22,22 +25,21 @@ Postgres database run in a docker container:
 
 `docker-compose up`
 
-Lauch the virtual environement and install modules:
+Launch the virtual environment and install modules:
 
-```
-workon django_base
-pip install -r req.txt
-```
+`workon django_base`
+
+`pip install -r req.txt`
 
 ### Fixtures
 Install :   
 `./manage.py loaddata django_base/fixtures/users.json`
 
-Admin user :
+Admin user :  
 - username : capitain.raymond.holt@b99.com  
 - password : iamthebossofthe99
 
-Normal user :
+Normal user :  
 - username : jake.peralta@b99.com
 - password : rosa1234
 
