@@ -1,9 +1,12 @@
 {% extends "layouts/simple.html" %}
 {% load i18n %}
 
+{% block title %}
+   {% trans 'Register' %}
+{% endblock title %}
+
 {% block content %}
 <h1>{% trans 'Register' %}</h1>
-
 
 <form method="post" class="ui form warning">
   {% csrf_token %}

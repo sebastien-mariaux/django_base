@@ -18,10 +18,7 @@
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
 
     <title>
-    {{ SITE_TITLE }}
-    {% if PAGE_TITLE %}
-        | {{ PAGE_TITLE }}
-    {% endif %}
+    {{ SITE_TITLE }} | {% block title %}{% endblock title %}
     </title>
   </head>
 
