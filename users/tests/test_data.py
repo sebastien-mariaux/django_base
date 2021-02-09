@@ -17,3 +17,13 @@ def create_user_amy():
         first_name="Amy", last_name="Santiago", password='philatelie'
     )
     return user
+
+
+def create_inactive_user():
+    user = UserModel.objects.create_user(
+        email="norm.scully@b99.com", username='Norm',
+        first_name="Norm", last_name="Scully", password='1234',
+        is_active=False
+    )
+    user.generate_validation_token()
+    return user

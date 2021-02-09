@@ -8,6 +8,14 @@ class RegisterForm(UserCreationForm):
         model = get_user_model()
         fields = ('email', 'username', 'password1', 'password2')
 
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.is_active = False
+        user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.init_email_validation()
+        return user
+
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(label='Email / Username')

@@ -1,0 +1,18 @@
+{% extends "layouts/simple.html" %}
+{% load i18n %}
+
+{% block title %}
+  {% trans 'Account confirmed' %}
+{% endblock title %}
+
+{% block content %}
+<h1>
+  {% trans 'Registration confirmed!' %}
+  <a class="ui primary right floated button" href="{% url 'login' %}">
+      <i class="icon pencil alternate"></i>
+      {% trans 'Login' %}
+  </a>
+</h1>
+<p>{% trans 'Thank you! Your account is now active.' %}</p>
+
+{% endblock content %}
