@@ -228,3 +228,41 @@ class AuthenticatedOnlyPages(TestCase):
         url = reverse(url_name)
         response = self.client.get(url, follow=True)
         self.assertEqual('users/login.html', response.template_name[0])
+
+
+class UpdateEmailTest(TestCase):
+    def setUp(self) -> None:
+        self.user = create_user_jake()
+        self.client.force_login(self.user)
+
+    def test_update_email_view(self):
+        response = self.client.get(reverse('update_email'), follow=True)
+        self.assertEqual(200, response.status_code)
+        self.assertEqual('users/edit_email.html', response.template_name[0])
+
+    def test_require_update(self):
+        data = {'next_email': 'jackie_baracuda@b99.com'}
+        response = self.client.post(reverse('update_email'), data, follow=True)
+        self.user.refresh_from_db()
+        self.assertEqual('jackie_baracuda@b99.com', self.user.next_email)
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual('users/profile.html', response.template_name[0])
+        # assert flash notice
+
+    def test_validate_new_email(self):
+        self.user.next_email = 'jackie_baracuda@b99.com'
+        self.user.save()
+        url = self.user.new_email_validation_url()
+        response = self.client.get(url)
+        self.assertEqual(200, response.status_code)
+        self.user.refresh_from_db()
+        self.assertEqual('jackie_baracuda@b99.com', self.user.email)
+        self.assertIsNone(self.user.next_email)
+
+        # activate validation link
+        # decode token
+        # replace email with temp email
+        # remove temp email
+
+    def test_available_next_email(self):
+        pass

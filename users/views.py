@@ -53,3 +53,15 @@ class UpdateProfileView(LoginRequiredMixin, generic.UpdateView):
 
     def get_success_url(self):
         return reverse('profile')
+
+
+class UpdateEmailView(UpdateProfileView):
+    fields = ['next_email']
+    template_name = 'users/edit_email.html'
+
+    def form_valid(self, form):
+        pass
+
+
+class NewEmailValidationView(generic.View):
+    pass

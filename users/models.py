@@ -33,6 +33,11 @@ class EmailUser(AbstractUser):
             'unique': _("A user with that email already exists."),
         },
     )
+    next_email = models.EmailField(
+        _('next email address'),
+        blank=True,
+        null=True,
+    )
     created_at = models.DateTimeField(
         verbose_name=_("created at"),
         auto_now_add=True
@@ -70,9 +75,20 @@ class EmailUser(AbstractUser):
         )
 
     def validation_url(self) -> str:
-        url = reverse('validate-email',
+        url = reverse('validate_email',
                       kwargs={'validation_token': self.validation_token})
         return urljoin(settings.BASE_URL, url)
+
+    def new_email_validation_url(self) -> str:
+        url = reverse('validate_new_email',
+                      kwargs={'validation_token': self.new_email_validation_token})
+
+    def new_email_validation_token(self):
+        return jwt.encode(
+            {"user_id": self.id, "user_email": self.email,
+             "next_email": self.next_email},
+            settings.SECRET_KEY, algorithm="HS256"
+        )
 
     def validate(self):
         self.is_active = True
