@@ -1,11 +1,12 @@
-import jwt
 from urllib.parse import urljoin
+import jwt
 from django.shortcuts import reverse
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.conf import settings
 from django.core.mail import send_mail
+
 
 class DatedModel(models.Model):
     created_at = models.DateTimeField(
@@ -46,7 +47,7 @@ class EmailUser(AbstractUser):
         null=True, blank=True,
     )
 
-    def init_email_validation(self):
+    def init_email_validation(self) -> None:
         self.generate_validation_token()
         self.send_email_activation_email()
 
@@ -57,17 +58,23 @@ class EmailUser(AbstractUser):
         )
         self.save()
 
-    def send_email_activation_email(self):
+    def send_email_activation_email(self) -> None:
         link = self.validation_url()
         send_mail(
             subject='Validation de votre adresse email',
             from_email='test@test.fr',
-            message=f"Pour valider votre email, veuillez cliquer sur le lien suivant : {link}",
+            message=f"Pour valider votre email, veuillez cliquer sur "
+                    f"le lien suivant : {link}",
             recipient_list=[self.email],
             fail_silently=False,
         )
 
-    def validation_url(self):
+    def validation_url(self) -> str:
         url = reverse('validate-email',
                       kwargs={'validation_token': self.validation_token})
         return urljoin(settings.BASE_URL, url)
+
+    def validate(self):
+        self.is_active = True
+        self.validation_token = None
+        self.save()

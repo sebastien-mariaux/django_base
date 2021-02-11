@@ -64,7 +64,7 @@ class RegisterTest(TestCase):
     url = reverse('register')
 
     def setUp(self):
-        create_user_jake()
+        self.user = create_user_jake()
 
     def test_register_page(self):
         response = self.client.get(self.url)
@@ -128,18 +128,26 @@ class RegisterTest(TestCase):
         self.assertTrue(user.is_active)
         expected = "Thank you! Your account is now active."
         self.assertIn(expected, response.content.decode())
-        self.assertEqual('users/email_confirmed.html', response.template_name[0])
 
-    def test_user_confirmation_failure(self):
-        user = create_inactive_user()
-        url = '/account/activation/1234'
+    def test_user_confirmation_failure_invalid_token(self):
+        active_before = UserModel.objects.filter(is_active=True).count()
+        url = 'http://localhost:8000/account/activation/1234/'
         response = self.client.get(url)
         self.assertEqual(200, response.status_code)
-        user.refresh_from_db()
-        self.assertFalse(user.is_active)
         expected = "Invalid activation link. Please contact an administrator"
         self.assertIn(expected, response.content.decode())
-        self.assertEqual('users/confirmation_failure.html', response.template_name[0])
+        active_after = UserModel.objects.filter(is_active=True).count()
+        self.assertEqual(active_after, active_before)
+
+    def test_user_confirmation_failure_user_not_found(self):
+        url = self.deleted_user_token_url()
+        active_before = UserModel.objects.filter(is_active=True).count()
+        response = self.client.get(url)
+        self.assertEqual(200, response.status_code)
+        expected = "Invalid activation link. Please contact an administrator"
+        self.assertIn(expected, response.content.decode())
+        active_after = UserModel.objects.filter(is_active=True).count()
+        self.assertEqual(active_after, active_before)
 
     def register_valid_user(self) -> HttpResponse:
         response = self.client.post(
@@ -150,6 +158,12 @@ class RegisterTest(TestCase):
         )
         self.assertEqual(200, response.status_code)
         return response
+
+    def deleted_user_token_url(self):
+        self.user.generate_validation_token()
+        url = self.user.validation_url()
+        self.user.delete()
+        return url
 
 
 class AccountTest(TestCase):

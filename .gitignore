@@ -6,3 +6,4 @@ htmlcov/*
 /geckodriver
 /geckodriver.log
 /coverage/*
+/.mypy_cache/**
