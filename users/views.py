@@ -1,9 +1,11 @@
+from django.contrib import messages
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from django.urls import reverse_lazy
-from django.shortcuts import reverse, render
+from django.shortcuts import reverse, render, redirect
 from .auth_token import user_from_token
 
 from .forms import LoginForm, RegisterForm
@@ -60,8 +62,28 @@ class UpdateEmailView(UpdateProfileView):
     template_name = 'users/edit_email.html'
 
     def form_valid(self, form):
-        pass
+        user = form.save()
+        user.send_email_update_email()
+        self.success_messages()
+        return redirect(reverse('profile'))
+
+    def success_messages(self) -> None:
+        messages.add_message(
+            self.request,
+            messages.INFO,
+            _('Please check your mailbox to confirm your new email'))
 
 
 class NewEmailValidationView(generic.View):
-    pass
+    def get(self, request, validation_token):  # pylint: disable=R0201
+        if user := user_from_token(validation_token):
+            user.replace_email()
+            self.success_messages()
+            return redirect(reverse('profile'))
+        return render(request, 'users/confirmation_failure.html')
+
+    def success_messages(self) -> None:
+        messages.add_message(
+            self.request,
+            messages.INFO,
+            _('Your email has been successfully updated'))

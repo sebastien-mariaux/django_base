@@ -247,22 +247,25 @@ class UpdateEmailTest(TestCase):
         self.assertEqual('jackie_baracuda@b99.com', self.user.next_email)
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual('users/profile.html', response.template_name[0])
-        # assert flash notice
+        # Todo: write custom helper to check messages
+        self.assertIn('Please check your mailbox to confirm your new email',
+                      [m.message for m in response.context['messages']])
 
     def test_validate_new_email(self):
         self.user.next_email = 'jackie_baracuda@b99.com'
         self.user.save()
         url = self.user.new_email_validation_url()
-        response = self.client.get(url)
+        response = self.client.get(url, follow=True)
         self.assertEqual(200, response.status_code)
         self.user.refresh_from_db()
         self.assertEqual('jackie_baracuda@b99.com', self.user.email)
         self.assertIsNone(self.user.next_email)
-
-        # activate validation link
-        # decode token
-        # replace email with temp email
-        # remove temp email
+        self.assertEqual('users/profile.html', response.template_name[0])
+        self.assertIn('Your email has been successfully updated',
+                      [m.message for m in response.context['messages']])
 
     def test_available_next_email(self):
+        pass
+
+    def test_validation_failure_email_taken(self):
         pass

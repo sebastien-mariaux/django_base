@@ -7,11 +7,7 @@
 
 {% block content %}
 <h1>
-  {% trans 'Registration confirmed!' %}
-  <a class="ui primary right floated button" href="{% url 'login' %}">
-      <i class="icon pencil alternate"></i>
-      {% trans 'Login' %}
-  </a>
+  {% trans 'Registration failed' %}
 </h1>
 <p>{% trans 'Invalid activation link. Please contact an administrator' %}</p>
 {% endblock content %}

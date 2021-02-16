@@ -81,7 +81,8 @@ class EmailUser(AbstractUser):
 
     def new_email_validation_url(self) -> str:
         url = reverse('validate_new_email',
-                      kwargs={'validation_token': self.new_email_validation_token})
+                      kwargs={'validation_token': self.new_email_validation_token()})
+        return urljoin(settings.BASE_URL, url)
 
     def new_email_validation_token(self):
         return jwt.encode(
@@ -90,7 +91,24 @@ class EmailUser(AbstractUser):
             settings.SECRET_KEY, algorithm="HS256"
         )
 
+    def send_email_update_email(self) -> None:
+        link = self.new_email_validation_url()
+        send_mail(
+            subject='Validation de votre nouvelle adresse email',
+            from_email='test@test.fr',
+            message=f"Pour valider votre nouvel email, veuillez cliquer sur "
+                    f"le lien suivant : {link}",
+            recipient_list=[self.email],
+            fail_silently=False,
+        )
+
     def validate(self):
         self.is_active = True
         self.validation_token = None
+        self.save()
+
+    def replace_email(self):
+        self.email = self.next_email
+        self.next_email = None
+        self.full_clean()
         self.save()
