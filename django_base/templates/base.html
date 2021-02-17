@@ -12,10 +12,16 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.css">
     <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.js"></script>
+
     <link href="{% static 'css/header.css' %}" rel="stylesheet">
     <link href="{% static 'css/nav.css' %}" rel="stylesheet">
     <link href="{% static 'css/form.css' %}" rel="stylesheet">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <!--Custom JS-->
+    <script src="{% static 'js/application.js' %}"></script>
+    {% block extra_js %}
+    {% endblock extra_js %}
 
     <title>
     {{ SITE_TITLE }} | {% block title %}{% endblock title %}

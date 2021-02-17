@@ -7,7 +7,7 @@ from django.views import generic
 from django.urls import reverse_lazy
 from django.shortcuts import reverse, render, redirect
 from .auth_token import user_from_token
-
+from .mailer import UpdateEmailMailer
 from .forms import LoginForm, RegisterForm
 
 UserModel = get_user_model()
@@ -30,10 +30,6 @@ class EmailValidationView(generic.View):
             user.validate()
             return render(request, 'users/email_confirmed.html', {'user': user})
         return render(request, 'users/confirmation_failure.html')
-
-
-class LogoutView(auth_views.LogoutView):
-    pass
 
 
 class ProfileView(LoginRequiredMixin, generic.DetailView):
@@ -60,10 +56,11 @@ class UpdateProfileView(LoginRequiredMixin, generic.UpdateView):
 class UpdateEmailView(UpdateProfileView):
     fields = ['next_email']
     template_name = 'users/edit_email.html'
+    mailer_class = UpdateEmailMailer
 
     def form_valid(self, form):
         user = form.save()
-        user.send_email_update_email()
+        self.send_mail(user)
         self.success_messages()
         return redirect(reverse('profile'))
 
@@ -72,6 +69,11 @@ class UpdateEmailView(UpdateProfileView):
             self.request,
             messages.INFO,
             _('Please check your mailbox to confirm your new email'))
+
+    def send_mail(self, user):
+        # todo: move this to a form?
+        mailer = self.mailer_class(user)
+        mailer.send()
 
 
 class NewEmailValidationView(generic.View):

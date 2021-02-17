@@ -30,7 +30,13 @@
     </tr>
     <tr>
       <td>{% trans 'email' %}</td>
-      <td>{{ user.email }}</td>
+      <td>
+        {{ user.email }}
+        <a class="ui primary right floated icon button" href="{% url  'update_email' %}"
+           title="{% trans 'update email' %}" >
+            <i class="icon pencil alternate"></i>
+        </a>
+      </td>
     </tr>
   </tbody>
 </table>

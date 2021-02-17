@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.conf import settings
 from django.core.mail import send_mail
+from .mailer import ValidateAccountMailer
 
 
 class DatedModel(models.Model):
@@ -52,10 +53,6 @@ class EmailUser(AbstractUser):
         null=True, blank=True,
     )
 
-    def init_email_validation(self) -> None:
-        self.generate_validation_token()
-        self.send_email_activation_email()
-
     def generate_validation_token(self):
         self.validation_token = jwt.encode(
             {"user_id": self.id, "user_email": self.email},
@@ -64,42 +61,14 @@ class EmailUser(AbstractUser):
         self.save()
 
     def send_email_activation_email(self) -> None:
-        link = self.validation_url()
-        send_mail(
-            subject='Validation de votre adresse email',
-            from_email='test@test.fr',
-            message=f"Pour valider votre email, veuillez cliquer sur "
-                    f"le lien suivant : {link}",
-            recipient_list=[self.email],
-            fail_silently=False,
-        )
+        mailer = ValidateAccountMailer(self)
+        mailer.send()
 
-    def validation_url(self) -> str:
-        url = reverse('validate_email',
-                      kwargs={'validation_token': self.validation_token})
-        return urljoin(settings.BASE_URL, url)
-
-    def new_email_validation_url(self) -> str:
-        url = reverse('validate_new_email',
-                      kwargs={'validation_token': self.new_email_validation_token()})
-        return urljoin(settings.BASE_URL, url)
-
-    def new_email_validation_token(self):
+    def new_email_validation_token(self) -> str:
         return jwt.encode(
             {"user_id": self.id, "user_email": self.email,
              "next_email": self.next_email},
             settings.SECRET_KEY, algorithm="HS256"
-        )
-
-    def send_email_update_email(self) -> None:
-        link = self.new_email_validation_url()
-        send_mail(
-            subject='Validation de votre nouvelle adresse email',
-            from_email='test@test.fr',
-            message=f"Pour valider votre nouvel email, veuillez cliquer sur "
-                    f"le lien suivant : {link}",
-            recipient_list=[self.email],
-            fail_silently=False,
         )
 
     def validate(self):

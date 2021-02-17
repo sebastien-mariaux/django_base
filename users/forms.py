@@ -14,20 +14,14 @@ class RegisterForm(UserCreationForm):
         user = super().save(commit=False)
         user.is_active = False
         user.set_password(self.cleaned_data["password1"])
-        if commit:
-            user.init_email_validation()
+        user.save()
+        self.send_email(user)
         return user
+
+    def send_email(self, user):
+        user.generate_validation_token()
+        user.send_email_activation_email()
 
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(label='Email / Username')
-
-
-# class UpdateEmailUserForm(forms.ModelForm):
-#     class Meta:
-#         model = UserModel
-#         fields = ('next_email')
-#
-#     def save(self, commit=True):
-#         user = super().save()
-#         user.

@@ -9,46 +9,5 @@
 <h1>
   {% trans 'Edit profile' %}
 </h1>
-
-<form method="post" class="ui form warning">
-  {% csrf_token %}
-  {% if form.non_field_errors or form.hidden_fields %}
-    <div class="ui warning message">
-      {% if form.non_field_errors %}
-          {% for error in form.non_field_errors %}
-            <p>{{ error }}</p>
-          {% endfor %}
-      {% endif %}
-
-      {% for hidden_field in form.hidden_fields %}
-        {% if hidden_field.errors %}
-            {% for error in hidden_field.errors %}
-              <p>(Hidden field {{ hidden_field.name }}) {{ error }}</p>
-            {% endfor %}
-        {% endif %}
-        {{ hidden_field }}
-      {% endfor %}
-    </div>
-  {% endif %}
-
-
-  {% for field in form.visible_fields %}
-    <div class="field {% if field.errors %} error{% endif %}">
-      {{ field.label_tag }}
-      {% if field.errors %}
-        {% for error in field.errors %}
-      <div class="error-message">{{ error }}</div>
-        {% endfor %}
-      {% endif %}
-      {{ field}}
-<!--      {% if field.help_text %}-->
-<!--        <small class="form-text text-muted">-->
-<!--          {{ field.help_text }}-->
-<!--        </small>-->
-<!--      {% endif %}-->
-    </div>
-  {% endfor %}
-
-  <input type="submit" value="Update" id="submit" class="ui primary button">
-</form>
+{% include "partials/form.html" %}
 {% endblock content %}

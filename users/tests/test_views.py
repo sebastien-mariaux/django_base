@@ -121,7 +121,8 @@ class RegisterTest(TestCase):
 
     def test_user_confirmation_success(self):
         user = create_inactive_user()
-        url = user.validation_url()
+        url = reverse('validate_email',
+                      kwargs={'validation_token': user.validation_token})
         response = self.client.get(url)
         self.assertEqual(200, response.status_code)
         user.refresh_from_db()
@@ -161,7 +162,8 @@ class RegisterTest(TestCase):
 
     def deleted_user_token_url(self):
         self.user.generate_validation_token()
-        url = self.user.validation_url()
+        url = reverse('validate_email',
+                      kwargs={'validation_token': self.user.validation_token})
         self.user.delete()
         return url
 
@@ -254,7 +256,10 @@ class UpdateEmailTest(TestCase):
     def test_validate_new_email(self):
         self.user.next_email = 'jackie_baracuda@b99.com'
         self.user.save()
-        url = self.user.new_email_validation_url()
+        url = reverse('validate_new_email',
+                      kwargs={
+                          'validation_token': self.user.new_email_validation_token()
+                      })
         response = self.client.get(url, follow=True)
         self.assertEqual(200, response.status_code)
         self.user.refresh_from_db()
