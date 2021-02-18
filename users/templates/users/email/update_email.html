@@ -1,0 +1,20 @@
+{% load i18n %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ subject }}</title>
+</head>
+<body>
+  <p>
+    {% trans 'Please click on the link below to confirm your new email' %}
+  </p>
+  <p>
+    <a href="{{ link }}">{{ link }}</a>
+  </p>
+  <p>
+    {% trans "If it doesn't work simply copy the link into your browser" %}
+  </p>
+</body>
+</html>

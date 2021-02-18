@@ -11,8 +11,9 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('', ProfileView.as_view(), name='profile'),
     path('edit/', UpdateProfileView.as_view(), name='edit_profile'),
-    path('activation/<str:validation_token>/', EmailValidationView.as_view(), name='validate_email'),
+    path('activation/<str:validation_token>/', EmailValidationView.as_view(),
+         name='validate_email'),
     path('email/edit/', UpdateEmailView.as_view(), name='update_email'),
-    path('validate_email/<str:validation_token>/', NewEmailValidationView.as_view(), name='validate_new_email'),
+    path('validate_email/<str:validation_token>/', NewEmailValidationView.as_view(),
+         name='validate_new_email'),
 ]
-

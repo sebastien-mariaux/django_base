@@ -1,0 +1,23 @@
+{% load i18n %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ subject }}</title>
+</head>
+<body>
+  <h1>
+    {% trans 'Thank you for joining ' %}{{ SITE_TITLE }}!
+  </h1>
+  <p>
+    {% trans 'Please click on the link below to confirm your registration' %}
+  </p>
+  <p>
+    <a href="{{ link }}">{{ link }}</a>
+  </p>
+  <p>
+    {% trans "If it doesn't work simply copy the link into your browser" %}
+  </p>
+</body>
+</html>
