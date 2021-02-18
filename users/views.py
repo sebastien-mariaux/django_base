@@ -1,5 +1,6 @@
-from django.contrib import messages
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+from django.contrib import messages
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -7,9 +8,7 @@ from django.views import generic
 from django.urls import reverse_lazy
 from django.shortcuts import reverse, render, redirect
 from .auth_token import user_from_token
-from .mailer import UpdateEmailMailer
-from .forms import LoginForm, RegisterForm
-
+from .forms import LoginForm, RegisterForm, UpdateEmailForm
 UserModel = get_user_model()
 
 
@@ -53,14 +52,18 @@ class UpdateProfileView(LoginRequiredMixin, generic.UpdateView):
         return reverse('profile')
 
 
-class UpdateEmailView(UpdateProfileView):
-    fields = ['next_email']
+class UpdateEmailView(LoginRequiredMixin, generic.UpdateView):
+    form_class = UpdateEmailForm
     template_name = 'users/edit_email.html'
-    mailer_class = UpdateEmailMailer
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get_success_url(self):
+        return reverse('profile')
 
     def form_valid(self, form):
-        user = form.save()
-        self.send_mail(user)
+        form.save()
         self.success_messages()
         return redirect(reverse('profile'))
 
@@ -70,18 +73,17 @@ class UpdateEmailView(UpdateProfileView):
             messages.INFO,
             _('Please check your mailbox to confirm your new email'))
 
-    def send_mail(self, user):
-        # todo: move this to a form?
-        mailer = self.mailer_class(user)
-        mailer.send()
-
 
 class NewEmailValidationView(generic.View):
     def get(self, request, validation_token):  # pylint: disable=R0201
         if user := user_from_token(validation_token):
-            user.replace_email()
-            self.success_messages()
+            try:
+                user.replace_email()
+                self.success_messages()
+            except ValidationError as err:
+                self.error_messages(err)
             return redirect(reverse('profile'))
+
         return render(request, 'users/confirmation_failure.html')
 
     def success_messages(self) -> None:
@@ -89,3 +91,10 @@ class NewEmailValidationView(generic.View):
             self.request,
             messages.INFO,
             _('Your email has been successfully updated'))
+
+    def error_messages(self, error):
+        messages.add_message(
+            self.request,
+            messages.ERROR,
+            ', '.join(error.messages)
+        )

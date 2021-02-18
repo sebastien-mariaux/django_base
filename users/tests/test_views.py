@@ -4,6 +4,7 @@ from django.test import TestCase
 from django.http import HttpResponse
 from django.shortcuts import reverse
 from .test_data import create_user_amy, create_user_jake, create_inactive_user
+from django_base.test_helpers import TestHelpers
 
 UserModel = get_user_model()
 
@@ -60,7 +61,7 @@ class LoginTest(TestCase):
                       response.context['form'].errors['__all__'][0])
 
 
-class RegisterTest(TestCase):
+class RegisterTest(TestCase, TestHelpers):
     url = reverse('register')
 
     def setUp(self):
@@ -128,7 +129,7 @@ class RegisterTest(TestCase):
         user.refresh_from_db()
         self.assertTrue(user.is_active)
         expected = "Thank you! Your account is now active."
-        self.assertIn(expected, response.content.decode())
+        self.assert_content(response, expected)
 
     def test_user_confirmation_failure_invalid_token(self):
         active_before = UserModel.objects.filter(is_active=True).count()
@@ -136,7 +137,7 @@ class RegisterTest(TestCase):
         response = self.client.get(url)
         self.assertEqual(200, response.status_code)
         expected = "Invalid activation link. Please contact an administrator"
-        self.assertIn(expected, response.content.decode())
+        self.assert_content(response, expected)
         active_after = UserModel.objects.filter(is_active=True).count()
         self.assertEqual(active_after, active_before)
 
@@ -146,7 +147,7 @@ class RegisterTest(TestCase):
         response = self.client.get(url)
         self.assertEqual(200, response.status_code)
         expected = "Invalid activation link. Please contact an administrator"
-        self.assertIn(expected, response.content.decode())
+        self.assert_content(response, expected)
         active_after = UserModel.objects.filter(is_active=True).count()
         self.assertEqual(active_after, active_before)
 
@@ -168,7 +169,7 @@ class RegisterTest(TestCase):
         return url
 
 
-class AccountTest(TestCase):
+class AccountTest(TestCase, TestHelpers):
     url = reverse('profile')
 
     def setUp(self):
@@ -180,22 +181,22 @@ class AccountTest(TestCase):
         response = self.client.get(self.url)
         self.assertEqual(200, response.status_code)
         self.assertEqual('users/profile.html', response.template_name[0])
-        self.assertIn(self.user.first_name, response.content.decode('utf-8'))
-        self.assertIn(self.user.last_name, response.content.decode('utf-8'))
-        self.assertIn(self.user.email, response.content.decode('utf-8'))
-        self.assertIn(self.user.username, response.content.decode('utf-8'))
-        self.assertIn('Edit', response.content.decode('utf-8'))
+        self.assert_content(response, self.user.first_name)
+        self.assert_content(response, self.user.last_name)
+        self.assert_content(response, self.user.email)
+        self.assert_content(response, self.user.username)
+        self.assert_content(response, 'Edit')
 
     def test_get_edit_page(self):
         response = self.client.get(reverse('edit_profile'))
         self.assertEqual(200, response.status_code)
         self.assertEqual('users/edit.html', response.template_name[0])
-        self.assertIn("Nom d’utilisateur", response.content.decode('utf-8'))
-        self.assertIn(self.user.username, response.content.decode('utf-8'))
-        self.assertIn('Prénom', response.content.decode('utf-8'))
-        self.assertIn('Nom', response.content.decode('utf-8'))
-        self.assertIn('Edit profile', response.content.decode('utf-8'))
-        self.assertNotIn('Adresse électronique', response.content.decode('utf-8'))
+        self.assert_content(response, "Nom d’utilisateur")
+        self.assert_content(response, self.user.username)
+        self.assert_content(response, 'Prénom')
+        self.assert_content(response, 'Nom')
+        self.assert_content(response, 'Edit profile')
+        self.assert_no_content(response, 'Adresse électronique')
 
     def test_update_profile(self):
         data = {'username': 'jajake'}
@@ -232,7 +233,7 @@ class AuthenticatedOnlyPages(TestCase):
         self.assertEqual('users/login.html', response.template_name[0])
 
 
-class UpdateEmailTest(TestCase):
+class UpdateEmailTest(TestCase, TestHelpers):
     def setUp(self) -> None:
         self.user = create_user_jake()
         self.client.force_login(self.user)
@@ -250,8 +251,8 @@ class UpdateEmailTest(TestCase):
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual('users/profile.html', response.template_name[0])
         # Todo: write custom helper to check messages
-        self.assertIn('Please check your mailbox to confirm your new email',
-                      [m.message for m in response.context['messages']])
+        self.assert_message(response,
+                            'Please check your mailbox to confirm your new email')
 
     def test_validate_new_email(self):
         self.user.next_email = 'jackie_baracuda@b99.com'
@@ -266,11 +267,30 @@ class UpdateEmailTest(TestCase):
         self.assertEqual('jackie_baracuda@b99.com', self.user.email)
         self.assertIsNone(self.user.next_email)
         self.assertEqual('users/profile.html', response.template_name[0])
-        self.assertIn('Your email has been successfully updated',
-                      [m.message for m in response.context['messages']])
+        self.assert_message(response,
+                            'Your email has been successfully updated')
 
     def test_available_next_email(self):
-        pass
+        amy = create_user_amy()
+        data = {'next_email': amy.email}
+        response = self.client.post(reverse('update_email'), data, follow=True)
+        self.user.refresh_from_db()
+        self.assertIsNone(self.user.next_email)
+        self.assertEqual(len(mail.outbox), 0)
+        self.assertEqual('users/edit_email.html', response.template_name[0])
+        self.assert_content(response, 'This email is already used')
 
     def test_validation_failure_email_taken(self):
-        pass
+        amy = create_user_amy()
+        self.user.next_email = amy.email
+        self.user.save()
+        url = reverse('validate_new_email',
+                      kwargs={
+                          'validation_token': self.user.new_email_validation_token()
+                      })
+        response = self.client.get(url, follow=True)
+        self.assertEqual(200, response.status_code)
+        self.user.refresh_from_db()
+        self.assertEqual('jake.peralta@b99.com', self.user.email)
+        self.assertEqual('users/profile.html', response.template_name[0])
+        self.assert_message(response, 'A user with that email already exists.')
