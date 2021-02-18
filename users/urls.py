@@ -20,5 +20,6 @@ urlpatterns = [
          name='validate_new_email'),
     path('change_password/', ChangePasswordView.as_view(), name='change_password'),
     path('reset_password/', ResetPasswordView.as_view(), name='reset_password'),
-    path('reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(),
+         name='password_reset_confirm'),
 ]

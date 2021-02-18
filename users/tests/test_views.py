@@ -321,8 +321,3 @@ class ChangePasswordTest(TestCase, TestHelpers):
         self.assertFalse(self.user.check_password('nouveau1234'))
         self.assert_content(response,
                             'Votre mot de passe doit contenir au minimum 8 caractères')
-
-
-class ResetPassword(TestCase, TestHelpers):
-    def test_reset_password(self):
-        url = reverse('reset_password')
