@@ -1,3 +1,12 @@
+echo 'RUN TESTS...'
+coverage run --source='.' manage.py test
+
+
+echo 'GENERATE COVERAGE...'
+coverage report
+coverage html
+
+
 echo 'RUN PYCODESTYLE...'
 pycodestyle django_base
 pycodestyle users

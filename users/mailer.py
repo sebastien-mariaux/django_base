@@ -1,5 +1,4 @@
 from urllib.parse import urljoin
-from django.core.mail import send_mail
 from django.shortcuts import reverse
 from django.conf import settings
 from django.utils.translation import gettext as _

@@ -9,6 +9,7 @@ omit =
   manage.py
   */tests/*
   *conftest.py
+  *test_helpers.py
 
 [html]
 directory = coverage

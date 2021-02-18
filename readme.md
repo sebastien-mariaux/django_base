@@ -1,4 +1,6 @@
 
+
+
 # DJANGO BASE
 
 A standard base for a django project.

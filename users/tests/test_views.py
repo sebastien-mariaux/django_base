@@ -3,8 +3,8 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.http import HttpResponse
 from django.shortcuts import reverse
-from .test_data import create_user_amy, create_user_jake, create_inactive_user
 from django_base.test_helpers import TestHelpers
+from .test_data import create_user_amy, create_user_jake, create_inactive_user
 
 UserModel = get_user_model()
 
@@ -250,7 +250,6 @@ class UpdateEmailTest(TestCase, TestHelpers):
         self.assertEqual('jackie_baracuda@b99.com', self.user.next_email)
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual('users/profile.html', response.template_name[0])
-        # Todo: write custom helper to check messages
         self.assert_message(response,
                             'Please check your mailbox to confirm your new email')
 
@@ -294,3 +293,36 @@ class UpdateEmailTest(TestCase, TestHelpers):
         self.assertEqual('jake.peralta@b99.com', self.user.email)
         self.assertEqual('users/profile.html', response.template_name[0])
         self.assert_message(response, 'A user with that email already exists.')
+
+
+class ChangePasswordTest(TestCase, TestHelpers):
+    def setUp(self) -> None:
+        self.user = create_user_jake()
+        self.client.force_login(self.user)
+
+    def test_password_change_success(self):
+        url = reverse('change_password')
+        data = {'old_password': 'rosa1234', 'new_password1': 'nouveau1234',
+                'new_password2': 'nouveau1234'}
+        response = self.client.post(url, data, follow=True)
+        self.assertEqual(200, response.status_code)
+        self.assert_message(response, 'Your password has been modified')
+        self.user.refresh_from_db()
+        self.assertTrue(self.user.check_password('nouveau1234'))
+        self.assertEqual('users/profile.html', response.template_name[0])
+
+    def test_password_change_failure(self):
+        url = reverse('change_password')
+        data = {'old_password': 'rosa1234', 'new_password1': 'aa',
+                'new_password2': 'aa'}
+        response = self.client.post(url, data, follow=True)
+        self.assertEqual(200, response.status_code)
+        self.assertEqual('users/change_password.html', response.template_name[0])
+        self.assertFalse(self.user.check_password('nouveau1234'))
+        self.assert_content(response,
+                            'Votre mot de passe doit contenir au minimum 8 caractères')
+
+
+class ResetPassword(TestCase, TestHelpers):
+    def test_reset_password(self):
+        url = reverse('reset_password')

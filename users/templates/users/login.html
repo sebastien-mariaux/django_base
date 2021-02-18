@@ -40,14 +40,15 @@
         {% endfor %}
       {% endif %}
       {{ field}}
-<!--      {% if field.help_text %}-->
-<!--        <small class="form-text text-muted">-->
-<!--          {{ field.help_text }}-->
-<!--        </small>-->
-<!--      {% endif %}-->
     </div>
   {% endfor %}
 
-  <input type="submit" value="Register" id="submit" class="ui primary button">
+  <input type="submit" value="Login" id="submit" class="ui primary button">
 </form>
+
+<p>
+  <a href="{% url 'reset_password' %}">
+    <i>{% trans 'Password forgotten' %}</i>
+  </a>
+</p>
 {% endblock content %}

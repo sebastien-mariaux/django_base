@@ -98,3 +98,48 @@ class NewEmailValidationView(generic.View):
             messages.ERROR,
             ', '.join(error.messages)
         )
+
+
+class ChangePasswordView(LoginRequiredMixin, auth_views.PasswordChangeView):
+    success_url = reverse_lazy('profile')
+    template_name = 'users/change_password.html'
+
+    def form_valid(self, form):
+        self.success_messages()
+        return super(ChangePasswordView, self).form_valid(form)
+
+    def success_messages(self) -> None:
+        messages.add_message(
+            self.request,
+            messages.INFO,
+            _('Your password has been modified'))
+
+
+class ResetPasswordView(auth_views.PasswordResetView):
+    template_name = 'users/password_reset_form.html'
+    success_url = reverse_lazy('login')
+
+    def form_valid(self, form):
+        self.success_messages()
+        return super(ResetPasswordView, self).form_valid(form)
+
+    def success_messages(self) -> None:
+        messages.add_message(
+            self.request,
+            messages.INFO,
+            _('Please check your emails. We will send you a link to reset your password'))
+
+
+class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
+    success_url = reverse_lazy('login')
+    template_name = 'users/password_reset_confirm.html'
+
+    def form_valid(self, form):
+        self.success_messages()
+        return super(PasswordResetConfirmView, self).form_valid(form)
+
+    def success_messages(self) -> None:
+        messages.add_message(
+            self.request,
+            messages.INFO,
+            _('Your password has been updated'))
