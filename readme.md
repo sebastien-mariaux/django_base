@@ -23,7 +23,12 @@ A standard base for a django project.
 Run with `./pipeline.sh`
 
 ## Setup
-Postgres database run in a docker container:
+### Backend
+Postgres database run in a docker container.
+
+First change the database port in both `docker-compose.yml` and django `settings.py` file. This avoid conflicts between projects running on the same local environment.
+
+Then run:
 
 `docker-compose up`
 
@@ -33,17 +38,36 @@ Launch the virtual environment and install modules:
 
 `pip install -r req.txt`
 
+Replace all occurrences of `django_base` by your own project name. Don't forget to also rename the django_base folder.
+
+### Frontend
+Frontend running with webpack and babel.
+
+Make sure you have node and npm installed.
+
+Your frontend code should be in the `assets` folder. It will be compiled to the `static` folder.
+
+Run `npm run dev` to process asset in development mode
+
 ### Fixtures
-Install :   
+Install :
 `./manage.py loaddata django_base/fixtures/users.json`
 
-Admin user :  
-- username : capitain.raymond.holt@b99.com  
+Admin user :
+- username : capitain.raymond.holt@b99.com
 - password : iamthebossofthe99
 
-Normal user :  
+Normal user :
 - username : jake.peralta@b99.com
 - password : rosa1234
 
-Alternatively, create a custom superuser :  
+Alternatively, create a custom superuser :
 `./manage.py createsuperuser`
+
+Or create your own fixtures!
+
+## Helpfull documentation
+
+[Documentation Django](https://docs.djangoproject.com/)
+
+[Django and frontend integration](https://www.saaspegasus.com/guides/modern-javascript-for-django-developers/integrating-javascript-pipeline/)

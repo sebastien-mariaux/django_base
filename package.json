@@ -1,0 +1,33 @@
+{
+  "name": "django_base",
+  "version": "1.0.0",
+  "description": "A standard base for a django project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --mode development --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sebastien-mariaux/django_base.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sebastien-mariaux/django_base/issues"
+  },
+  "homepage": "https://github.com/sebastien-mariaux/django_base#readme",
+  "devDependencies": {
+    "sass": "^1.35.2",
+    "sass-loader": "^12.1.0",
+    "webpack": "^5.44.0",
+    "webpack-cli": "^4.7.2"
+  },
+  "dependencies": {
+    "css-loader": "^5.2.7",
+    "jquery": "^3.6.0",
+    "jsdom": "^16.6.0",
+    "style-loader": "^3.1.0"
+  }
+}
