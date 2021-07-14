@@ -6,45 +6,45 @@
 {% endblock title %}
 
 {% block content %}
-<h1>
-  {% trans 'My profile' %}
-  <a class="ui primary right floated button" href="{% url 'edit_profile' %}">
-      <i class="icon pencil alternate"></i>
+<div class="title-row">
+  <h1>
+    {% trans 'My profile' %}
+  </h1>
+    <a class="btn btn-primary" href="{% url 'edit_profile' %}">
+      <i class="fas fa-pen"></i>
       {% trans 'Edit' %}
-  </a>
-</h1>
+    </a>
+</div>
 
 <h2>{% trans 'User information' %}</h2>
-<table class="ui definition table">
-  <tbody>
-    <tr>
-      <td>{% trans 'username' %}</td>
-      <td>{{ user.username }}</td>
-    </tr>
-    <tr>
-      <td>{% trans 'first name' %}</td>
-      <td>{{ user.first_name }}</td>
-    </tr>
-    <tr>
-      <td>{% trans 'last name' %}</td>
-      <td>{{ user.last_name }}</td>
-    </tr>
-    <tr>
-      <td>{% trans 'email' %}</td>
-      <td>
-        {{ user.email }}
-        <a class="ui primary right floated icon button" href="{% url  'update_email' %}"
-           title="{% trans 'update email' %}" >
-            <i class="icon pencil alternate"></i>
-        </a>
-      </td>
-    </tr>
-  </tbody>
-</table>
+
+
+<dl class="row">
+  <dt class="col-sm-3">{% trans 'Username' %} </dt>
+  <dd class="col-sm-9">{{ user.username }}</dd>
+
+  <dt class="col-sm-3">{% trans 'First name' %}</dt>
+  <dd class="col-sm-9">{{ user.first_name }}  </dd>
+
+  <dt class="col-sm-3">{% trans 'Last name' %}</dt>
+  <dd class="col-sm-9">{{ user.last_name }}  </dd>
+
+  <dt class="col-sm-3">{% trans 'Email' %}</dt>
+  <dd class="col-sm-9">
+    {{ user.email }}
+    <a class="ui primary right floated icon button" 
+       href="{% url  'update_email' %}"
+       title="{% trans 'update email' %}" >
+      <i class="fas fa-pen"></i>
+    </a>
+  </dd>
+
+
+</dl>
 
 <h2>{% trans 'Security' %}</h2>
 <p>
-  <a class="ui primary basic button" href="{% url 'change_password' %}">
+  <a class="btn btn-warning" href="{% url 'change_password' %}">
       <i class="icon unlock alternate"></i>
       {% trans 'Change password' %}
   </a>

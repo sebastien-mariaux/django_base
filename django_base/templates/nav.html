@@ -1,24 +1,37 @@
 {% load i18n %}
 
-<nav class="ui menu">
-  <a class="item" href="{% url 'home' %}">
-    Home
-  </a>
-  <div class="right menu">
+<nav class="navigation">
+  <div class="left-menu">
+    <div class='navigation-item'>
+      <a href="{% url 'home' %}">
+        Home
+      </a>
+    </div>
+  </div>
+
+  <div class="right-menu">
     {% if user.is_authenticated %}
-    <a class="item profile" href="{% url 'profile' %}">
-      {% trans 'Profile' %}
-    </a>
-    <a class="item logout" href="{% url 'logout' %}">
-      {% trans 'logout' %}
-    </a>
+      <div class='navigation-item'>
+        <a class="profile" href="{% url 'profile' %}">
+          {% trans 'Profile' %}
+        </a>
+      </div>
+      <div class='navigation-item'>
+        <a class="logout" href="{% url 'logout' %}">
+          {% trans 'logout' %}
+        </a>
+      </div>
     {% else %}
-    <a class="item login" href="{% url 'login' %}">
-      {% trans 'login' %}
-    </a>
-    <a class="item register" href="{% url 'register' %}">
-      {% trans 'register' %}
-    </a>
+      <div class='navigation-item'>
+        <a class="login" href="{% url 'login' %}">
+          {% trans 'login' %}
+        </a>
+      </div>
+      <div class='navigation-item'>
+        <a class="register" href="{% url 'register' %}">
+          {% trans 'register' %}
+        </a>
+      </div>
     {% endif %}
   </div>
 </nav>

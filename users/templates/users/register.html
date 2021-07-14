@@ -1,53 +1,15 @@
 {% extends "layouts/simple.html" %}
-{% load i18n %}
+{% load i18n crispy_forms_tags %}
 
 {% block title %}
    {% trans 'Register' %}
 {% endblock title %}
 
 {% block content %}
-<h1>{% trans 'Register' %}</h1>
+<div class="small-form">
+  <h1>{% trans 'Register' %}</h1>
 
-<form method="post" class="ui form warning">
-  {% csrf_token %}
-  {% if form.non_field_errors or form.hidden_fields %}
-    <div class="ui warning message">
-      {% if form.non_field_errors %}
-          {% for error in form.non_field_errors %}
-            <p>{{ error }}</p>
-          {% endfor %}
-      {% endif %}
+  {% include "partials/form.html" with action="Register" %}
 
-      {% for hidden_field in form.hidden_fields %}
-        {% if hidden_field.errors %}
-            {% for error in hidden_field.errors %}
-              <p>(Hidden field {{ hidden_field.name }}) {{ error }}</p>
-            {% endfor %}
-        {% endif %}
-        {{ hidden_field }}
-      {% endfor %}
-    </div>
-  {% endif %}
-
-
-  {% for field in form.visible_fields %}
-    <div class="field {% if field.errors %} error{% endif %}">
-      {{ field.label_tag }}
-      {% if field.errors %}
-        {% for error in field.errors %}
-      <div class="error-message">{{ error }}</div>
-        {% endfor %}
-      {% endif %}
-      {{ field}}
-<!--      {% if field.help_text %}-->
-<!--        <small class="form-text text-muted">-->
-<!--          {{ field.help_text }}-->
-<!--        </small>-->
-<!--      {% endif %}-->
-    </div>
-  {% endfor %}
-
-  <input type="submit" value="Register" id="submit" class="ui primary button">
-</form>
-
+</div>
 {% endblock content %}

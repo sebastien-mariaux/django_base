@@ -33,6 +33,7 @@ SITE_TITLE = 'Django Base'
 # USER MANAGEMENT
 AUTH_USER_MODEL = 'users.EmailUser'
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/account/login'
 
 AUTHENTICATION_BACKENDS = (
@@ -48,9 +49,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'django_base',
     'users',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

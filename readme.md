@@ -10,7 +10,7 @@ A standard base for a django project.
 ### Functionalities
 - Custom user model with email authentication
 - Basic Account interface with profile edition
-- Base layout using Fomantic UI
+- Base layout using Bootstrap
 - Basic markdown integration
 
 ### Testing and quality of code
@@ -54,10 +54,12 @@ Install :
 `./manage.py loaddata django_base/fixtures/users.json`
 
 Admin user :
+
 - username : capitain.raymond.holt@b99.com
 - password : iamthebossofthe99
 
 Normal user :
+
 - username : jake.peralta@b99.com
 - password : rosa1234
 
