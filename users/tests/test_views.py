@@ -46,7 +46,7 @@ class LoginTest(TestCase):
         )
         self.assertEqual(200, response.status_code)
         self.assertEqual('users/login.html', response.template_name[0])
-        self.assertIn('Saisissez un nom d’utilisateur et un mot de passe valides',
+        self.assertIn('Please enter a correct username and password',
                       response.context['form'].errors['__all__'][0])
 
     def test_failure_wrong_password(self):
@@ -57,7 +57,7 @@ class LoginTest(TestCase):
         )
         self.assertEqual(200, response.status_code)
         self.assertEqual('users/login.html', response.template_name[0])
-        self.assertIn('Saisissez un nom d’utilisateur et un mot de passe valides',
+        self.assertIn('Please enter a correct username and password',
                       response.context['form'].errors['__all__'][0])
 
 
@@ -87,7 +87,7 @@ class RegisterTest(TestCase, TestHelpers):
         self.assertEqual('users/register.html', response.template_name[0])
         self.assertIn('A user with that email already exists',
                       response.context['form'].errors['email'][0])
-        self.assertIn('Un utilisateur avec ce nom existe déjà.',
+        self.assertIn('A user with that username already exists',
                       response.context['form'].errors['username'][0])
 
     def test_failure_invalid_password(self):
@@ -99,7 +99,7 @@ class RegisterTest(TestCase, TestHelpers):
         )
         self.assertEqual(200, response.status_code)
         self.assertEqual('users/register.html', response.template_name[0])
-        self.assertIn('doit contenir au minimum 8 caractères.',
+        self.assertIn('It must contain at least 8 characters.',
                       response.context['form'].errors['password2'][0])
 
     def test_user_inactive_after_registration(self):
@@ -191,12 +191,12 @@ class AccountTest(TestCase, TestHelpers):
         response = self.client.get(reverse('edit_profile'))
         self.assertEqual(200, response.status_code)
         self.assertEqual('users/edit.html', response.template_name[0])
-        self.assert_content(response, "Nom d’utilisateur")
+        self.assert_content(response, "Username")
         self.assert_content(response, self.user.username)
-        self.assert_content(response, 'Prénom')
-        self.assert_content(response, 'Nom')
+        self.assert_content(response, 'First name')
+        self.assert_content(response, 'Last name')
         self.assert_content(response, 'Edit profile')
-        self.assert_no_content(response, 'Adresse électronique')
+        self.assert_no_content(response, 'Email')
 
     def test_update_profile(self):
         data = {'username': 'jajake'}
@@ -320,4 +320,4 @@ class ChangePasswordTest(TestCase, TestHelpers):
         self.assertEqual('users/change_password.html', response.template_name[0])
         self.assertFalse(self.user.check_password('nouveau1234'))
         self.assert_content(response,
-                            'Votre mot de passe doit contenir au minimum 8 caractères')
+                            'It must contain at least 8 characters.')

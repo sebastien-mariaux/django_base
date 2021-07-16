@@ -54,7 +54,7 @@ class UpdateEmailMailer(UserMailer):
 
 
 class ValidateAccountMailer(UserMailer):
-    subject = _('Validation de votre adresse email')
+    subject = _('Email address validation')
     template = "users/email/validate_account.html"
 
     def message(self):
