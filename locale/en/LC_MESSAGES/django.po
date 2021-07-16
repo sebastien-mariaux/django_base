@@ -1,0 +1,228 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-07-14 16:19+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: django_base/templates/home.html:5
+msgid "Home"
+msgstr ""
+
+#: django_base/templates/nav.html:16 users/templates/users/profile.html:5
+msgid "Profile"
+msgstr ""
+
+#: django_base/templates/nav.html:21
+msgid "logout"
+msgstr ""
+
+#: django_base/templates/nav.html:27
+msgid "login"
+msgstr ""
+
+#: django_base/templates/nav.html:32
+msgid "register"
+msgstr ""
+
+#: users/mailer.py:11
+#, python-brace-format
+msgid "Message from {settings.SITE_TITLE}"
+msgstr ""
+
+#: users/mailer.py:41
+#, python-brace-format
+msgid "Confirm your new email for {settings.SITE_TITLE}"
+msgstr ""
+
+#: users/mailer.py:45
+msgid "To confirm your new email please copy the following link "
+msgstr ""
+
+#: users/mailer.py:57
+msgid "Validation de votre adresse email"
+msgstr ""
+
+#: users/mailer.py:61
+msgid "To confirm your account please copy the following link "
+msgstr ""
+
+#: users/models.py:11 users/models.py:40
+msgid "created at"
+msgstr ""
+
+#: users/models.py:15 users/models.py:44
+msgid "updated at"
+msgstr ""
+
+#: users/models.py:26
+msgid "email address"
+msgstr ""
+
+#: users/models.py:31
+msgid "A user with that email already exists."
+msgstr ""
+
+#: users/models.py:35
+msgid "next email address"
+msgstr ""
+
+#: users/models.py:48
+msgid "validation token"
+msgstr ""
+
+#: users/templates/users/change_password.html:5
+msgid "Change Email"
+msgstr ""
+
+#: users/templates/users/change_password.html:10
+#: users/templates/users/profile.html:49
+msgid "Change password"
+msgstr ""
+
+#: users/templates/users/confirmation_failure.html:5
+#: users/templates/users/email_confirmed.html:5
+msgid "Account confirmed"
+msgstr ""
+
+#: users/templates/users/confirmation_failure.html:10
+msgid "Registration failed"
+msgstr ""
+
+#: users/templates/users/confirmation_failure.html:12
+msgid "Invalid activation link. Please contact an administrator"
+msgstr ""
+
+#: users/templates/users/edit.html:5 users/templates/users/edit.html:10
+#: users/templates/users/password_reset_confirm.html:5
+#: users/templates/users/password_reset_form.html:5
+msgid "Edit profile"
+msgstr ""
+
+#: users/templates/users/edit_email.html:5
+#: users/templates/users/edit_email.html:9
+msgid "Update email"
+msgstr ""
+
+#: users/templates/users/email/update_email.html:11
+msgid "Please click on the link below to confirm your new email"
+msgstr ""
+
+#: users/templates/users/email/update_email.html:17
+#: users/templates/users/email/validate_account.html:20
+msgid "If it doesn't work simply copy the link into your browser"
+msgstr ""
+
+#: users/templates/users/email/validate_account.html:11
+msgid "Thank you for joining "
+msgstr ""
+
+#: users/templates/users/email/validate_account.html:14
+msgid "Please click on the link below to confirm your registration"
+msgstr ""
+
+#: users/templates/users/email_confirmed.html:10
+msgid "Registration confirmed!"
+msgstr ""
+
+#: users/templates/users/email_confirmed.html:13
+#: users/templates/users/login.html:5 users/templates/users/login.html:10
+msgid "Login"
+msgstr ""
+
+#: users/templates/users/email_confirmed.html:16
+msgid "Thank you! Your account is now active."
+msgstr ""
+
+#: users/templates/users/login.html:16
+msgid "Password forgotten"
+msgstr ""
+
+#: users/templates/users/password_reset_confirm.html:10
+#: users/templates/users/password_reset_form.html:11
+msgid "Reset password"
+msgstr ""
+
+#: users/templates/users/password_reset_confirm.html:12
+msgid "Now it's time to choose a new password!"
+msgstr ""
+
+#: users/templates/users/password_reset_form.html:13
+msgid ""
+"Lost your password? Enter your email below, we will send you instruction to "
+"set a new one."
+msgstr ""
+
+#: users/templates/users/profile.html:11
+msgid "My profile"
+msgstr ""
+
+#: users/templates/users/profile.html:15
+msgid "Edit"
+msgstr ""
+
+#: users/templates/users/profile.html:19
+msgid "User information"
+msgstr ""
+
+#: users/templates/users/profile.html:23
+msgid "Username"
+msgstr ""
+
+#: users/templates/users/profile.html:26
+msgid "First name"
+msgstr ""
+
+#: users/templates/users/profile.html:29
+msgid "Last name"
+msgstr ""
+
+#: users/templates/users/profile.html:32
+msgid "Email"
+msgstr ""
+
+#: users/templates/users/profile.html:37
+msgid "update email"
+msgstr ""
+
+#: users/templates/users/profile.html:45
+msgid "Security"
+msgstr ""
+
+#: users/templates/users/register.html:5 users/templates/users/register.html:10
+msgid "Register"
+msgstr ""
+
+#: users/views.py:74
+msgid "Please check your mailbox to confirm your new email"
+msgstr ""
+
+#: users/views.py:93
+msgid "Your email has been successfully updated"
+msgstr ""
+
+#: users/views.py:115
+msgid "Your password has been modified"
+msgstr ""
+
+#: users/views.py:130
+msgid ""
+"Please check your emails. We will send you a link to reset your password"
+msgstr ""
+
+#: users/views.py:145
+msgid "Your password has been updated"
+msgstr ""
