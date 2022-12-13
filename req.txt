@@ -17,3 +17,6 @@ markdown
 
 # JWT Token
 pyjwt
+
+# Forms
+django-crispy-forms

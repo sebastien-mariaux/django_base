@@ -32,6 +32,9 @@ Then run:
 
 `docker-compose up`
 
+Install prerequisites:
+`sudo apt install libpq-dev`
+
 Launch the virtual environment and install modules:
 
 `workon django_base`
@@ -46,7 +49,7 @@ Frontend running with webpack and babel.
 Make sure you have node and npm installed.
 
 Your frontend code should be in the `assets` folder. It will be compiled to the `static` folder.
-
+Run `npm install`
 Run `npm run dev` to process asset in development mode
 
 ### Fixtures
